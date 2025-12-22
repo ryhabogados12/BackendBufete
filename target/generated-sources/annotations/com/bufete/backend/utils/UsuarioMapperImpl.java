@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-11-08T04:19:38-0500",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Oracle Corporation)"
+    date = "2025-11-14T16:57:51-0500",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251023-0518, environment: Java 21.0.8 (Eclipse Adoptium)"
 )
 @Component
 public class UsuarioMapperImpl implements UsuarioMapper {
@@ -28,18 +28,18 @@ public class UsuarioMapperImpl implements UsuarioMapper {
 
         usuarioDTO.setRolNombre( usuarioRolNombre( usuario ) );
         usuarioDTO.setRolId( usuarioRolId( usuario ) );
-        usuarioDTO.setId( usuario.getId() );
-        usuarioDTO.setNombre( usuario.getNombre() );
-        usuarioDTO.setApellido( usuario.getApellido() );
-        usuarioDTO.setEmail( usuario.getEmail() );
-        usuarioDTO.setIdentificacion( usuario.getIdentificacion() );
-        usuarioDTO.setTelefono( usuario.getTelefono() );
-        usuarioDTO.setDireccion( usuario.getDireccion() );
         usuarioDTO.setActivo( usuario.getActivo() );
-        usuarioDTO.setNuevoUsuario( usuario.getNuevoUsuario() );
+        usuarioDTO.setApellido( usuario.getApellido() );
         usuarioDTO.setCreatedAt( usuario.getCreatedAt() );
-        usuarioDTO.setUpdatedAt( usuario.getUpdatedAt() );
+        usuarioDTO.setDireccion( usuario.getDireccion() );
+        usuarioDTO.setEmail( usuario.getEmail() );
+        usuarioDTO.setId( usuario.getId() );
+        usuarioDTO.setIdentificacion( usuario.getIdentificacion() );
         usuarioDTO.setLastLogin( usuario.getLastLogin() );
+        usuarioDTO.setNombre( usuario.getNombre() );
+        usuarioDTO.setNuevoUsuario( usuario.getNuevoUsuario() );
+        usuarioDTO.setTelefono( usuario.getTelefono() );
+        usuarioDTO.setUpdatedAt( usuario.getUpdatedAt() );
 
         return usuarioDTO;
     }
@@ -66,12 +66,12 @@ public class UsuarioMapperImpl implements UsuarioMapper {
 
         Usuario.UsuarioBuilder usuario = Usuario.builder();
 
-        usuario.nombre( request.getNombre() );
         usuario.apellido( request.getApellido() );
+        usuario.direccion( request.getDireccion() );
         usuario.email( request.getEmail() );
         usuario.identificacion( request.getIdentificacion() );
+        usuario.nombre( request.getNombre() );
         usuario.telefono( request.getTelefono() );
-        usuario.direccion( request.getDireccion() );
 
         return usuario.build();
     }

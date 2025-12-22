@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-11-08T04:19:38-0500",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Oracle Corporation)"
+    date = "2025-11-14T16:57:51-0500",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251023-0518, environment: Java 21.0.8 (Eclipse Adoptium)"
 )
 @Component
 public class NodeMapperImpl implements NodeMapper {
@@ -29,17 +29,17 @@ public class NodeMapperImpl implements NodeMapper {
         nodeDTO.expedienteNombre( nodeExpedienteNombre( node ) );
         nodeDTO.parentName( nodeParentName( node ) );
         nodeDTO.createdByNombre( nodeCreatedByNombre( node ) );
-        nodeDTO.id( node.getId() );
-        nodeDTO.type( node.getType() );
-        nodeDTO.name( node.getName() );
-        nodeDTO.description( node.getDescription() );
-        nodeDTO.modulo( node.getModulo() );
+        nodeDTO.children( nodeSetToNodeDTOList( node.getChildren() ) );
         nodeDTO.createdAt( node.getCreatedAt() );
-        nodeDTO.updatedAt( node.getUpdatedAt() );
-        nodeDTO.sizeBytes( node.getSizeBytes() );
+        nodeDTO.description( node.getDescription() );
+        nodeDTO.id( node.getId() );
         nodeDTO.itemCount( node.getItemCount() );
         nodeDTO.lastAccessed( node.getLastAccessed() );
-        nodeDTO.children( nodeSetToNodeDTOList( node.getChildren() ) );
+        nodeDTO.modulo( node.getModulo() );
+        nodeDTO.name( node.getName() );
+        nodeDTO.sizeBytes( node.getSizeBytes() );
+        nodeDTO.type( node.getType() );
+        nodeDTO.updatedAt( node.getUpdatedAt() );
 
         return nodeDTO.build();
     }

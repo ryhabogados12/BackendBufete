@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-11-08T04:19:37-0500",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Oracle Corporation)"
+    date = "2025-11-14T16:57:52-0500",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251023-0518, environment: Java 21.0.8 (Eclipse Adoptium)"
 )
 @Component
 public class EventoMapperImpl implements EventoMapper {
@@ -36,13 +36,13 @@ public class EventoMapperImpl implements EventoMapper {
         eventoDTO.expedienteId( eventoExpedienteId( evento ) );
         eventoDTO.expedienteNombre( eventoExpedienteNombre( evento ) );
         eventoDTO.responsableId( eventoResponsableId( evento ) );
-        eventoDTO.id( evento.getId() );
-        eventoDTO.titulo( evento.getTitulo() );
-        eventoDTO.descripcion( evento.getDescripcion() );
-        eventoDTO.fechaInicio( evento.getFechaInicio() );
-        eventoDTO.fechaFin( evento.getFechaFin() );
         eventoDTO.allDay( evento.getAllDay() );
         eventoDTO.createdAt( evento.getCreatedAt() );
+        eventoDTO.descripcion( evento.getDescripcion() );
+        eventoDTO.fechaFin( evento.getFechaFin() );
+        eventoDTO.fechaInicio( evento.getFechaInicio() );
+        eventoDTO.id( evento.getId() );
+        eventoDTO.titulo( evento.getTitulo() );
         eventoDTO.updatedAt( evento.getUpdatedAt() );
 
         eventoDTO.responsableNombre( getFullName(evento.getResponsable().getNombre(), evento.getResponsable().getApellido()) );
@@ -72,11 +72,11 @@ public class EventoMapperImpl implements EventoMapper {
 
         Evento.EventoBuilder evento = Evento.builder();
 
-        evento.titulo( request.getTitulo() );
-        evento.descripcion( request.getDescripcion() );
-        evento.fechaInicio( request.getFechaInicio() );
-        evento.fechaFin( request.getFechaFin() );
         evento.allDay( request.isAllDay() );
+        evento.descripcion( request.getDescripcion() );
+        evento.fechaFin( request.getFechaFin() );
+        evento.fechaInicio( request.getFechaInicio() );
+        evento.titulo( request.getTitulo() );
 
         return evento.build();
     }
@@ -110,12 +110,12 @@ public class EventoMapperImpl implements EventoMapper {
 
         Evento.EventoBuilder evento = Evento.builder();
 
+        evento.allDay( eventoDTO.getAllDay() );
+        evento.descripcion( eventoDTO.getDescripcion() );
+        evento.fechaFin( eventoDTO.getFechaFin() );
+        evento.fechaInicio( eventoDTO.getFechaInicio() );
         evento.id( eventoDTO.getId() );
         evento.titulo( eventoDTO.getTitulo() );
-        evento.descripcion( eventoDTO.getDescripcion() );
-        evento.fechaInicio( eventoDTO.getFechaInicio() );
-        evento.fechaFin( eventoDTO.getFechaFin() );
-        evento.allDay( eventoDTO.getAllDay() );
 
         return evento.build();
     }

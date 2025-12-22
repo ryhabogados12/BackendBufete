@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-11-08T04:19:37-0500",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Oracle Corporation)"
+    date = "2025-11-14T16:57:51-0500",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251023-0518, environment: Java 21.0.8 (Eclipse Adoptium)"
 )
 @Component
 public class ExpedienteMapperImpl implements ExpedienteMapper {
@@ -29,14 +29,14 @@ public class ExpedienteMapperImpl implements ExpedienteMapper {
         expedienteDTO.procesoNombre( expedienteProcesoNombre( expediente ) );
         expedienteDTO.procesoNumero( expedienteProcesoNumeroProceso( expediente ) );
         expedienteDTO.createdByNombre( expedienteCreatedByNombre( expediente ) );
-        expedienteDTO.id( expediente.getId() );
-        expedienteDTO.nombre( expediente.getNombre() );
         expedienteDTO.descripcion( expediente.getDescripcion() );
         expedienteDTO.estado( expediente.getEstado() );
-        expedienteDTO.fechaCreacion( expediente.getFechaCreacion() );
         expedienteDTO.fechaCierre( expediente.getFechaCierre() );
-        expedienteDTO.rootNodeId( expediente.getRootNodeId() );
+        expedienteDTO.fechaCreacion( expediente.getFechaCreacion() );
+        expedienteDTO.id( expediente.getId() );
+        expedienteDTO.nombre( expediente.getNombre() );
         expedienteDTO.orden( expediente.getOrden() );
+        expedienteDTO.rootNodeId( expediente.getRootNodeId() );
         expedienteDTO.updatedAt( expediente.getUpdatedAt() );
 
         return expedienteDTO.build();
@@ -64,8 +64,8 @@ public class ExpedienteMapperImpl implements ExpedienteMapper {
 
         Expediente.ExpedienteBuilder expediente = Expediente.builder();
 
-        expediente.nombre( request.getNombre() );
         expediente.descripcion( request.getDescripcion() );
+        expediente.nombre( request.getNombre() );
         expediente.orden( request.getOrden() );
 
         return expediente.build();
