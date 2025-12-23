@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bufete.backend.Dtos.FileUploadResponse;
@@ -144,6 +145,7 @@ public class NodeService {
         return convertToDTO(savedFolder);
     }
 
+    @Transactional
     public FileUploadResponse uploadFileToExpediente(FileUploadRequest request, Long uploadedById) {
 
         // Validar que el padre existe y es una carpeta

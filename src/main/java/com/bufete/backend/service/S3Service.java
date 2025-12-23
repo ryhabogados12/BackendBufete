@@ -238,8 +238,8 @@ public class S3Service {
         if (lastDot > 0) {
             extension = originalName.substring(lastDot);
         }
-        
-        return String.format("%s/abogado-%s/expediente-%d/%s%s", 
+        /* El formato de la clave de almacenamiento es: basePath/usr-abogadoId/expedienteId/nodeId.extension */
+        return String.format("%s/usr-%s/%d/%s%s", 
             basePath,abogadoId, expedienteId, nodeId.toString(), extension);
     }
 
