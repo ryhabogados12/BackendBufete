@@ -43,8 +43,8 @@ public class Usuario {
     @Column(name = "identificacion", unique = true, length = 100)
     private String identificacion;
     
-    @Column(name = "contraseña", nullable = false, length = 255)
-    private String contraseña;
+    @Column(name = "contrasena", nullable = false, length = 255)
+    private String contrasena;
     
     @Column(name = "telefono", length = 20)
     private String telefono;
@@ -123,12 +123,12 @@ public class Usuario {
         this.identificacion = identificacion;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public String getTelefono() {

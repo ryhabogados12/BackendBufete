@@ -38,6 +38,14 @@ public class SentenciaController {
         
     }
 
+
+    @GetMapping("/cliente/{idCliente}")
+    public ResponseEntity<List<SentenciaResponse>> listarPorCliente(
+            @PathVariable String idCliente) {
+        List<SentenciaResponse> sentencias = sentenciaService.listarPorCliente(idCliente);
+        return ResponseEntity.ok(sentencias);
+    }
+
     /**
      * Listar sentencias por tipo de sentencia
      * GET /api/sentencias/tipo/{tipoSentencia}

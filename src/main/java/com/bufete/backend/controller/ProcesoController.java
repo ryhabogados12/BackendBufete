@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bufete.backend.Dtos.ApiResponse;
 import com.bufete.backend.Dtos.PageResponse;
 import com.bufete.backend.Dtos.proceso.CreateProcesoRequest;
+import com.bufete.backend.Dtos.proceso.EditProcesoRequest;
 import com.bufete.backend.Dtos.proceso.ProcesoDTO;
 import com.bufete.backend.Dtos.proceso.UpdateEstadoProcesoRequest;
 import com.bufete.backend.model.Proceso;
@@ -94,16 +95,20 @@ public class ProcesoController {
     @Operation(summary = "Actualizar proceso", description = "Actualiza los datos de un proceso existente")
     public ResponseEntity<ApiResponse<ProcesoDTO>> updateProceso(
             @PathVariable @Positive Long id,
-            @Valid @RequestBody CreateProcesoRequest request) {
+            @Valid @RequestBody EditProcesoRequest request,
+        Authentication authentication) {
+
+            Long abogadoId = getUserIdFromAuthentication(authentication);
         
-        ProcesoDTO proceso = procesoService.updateProceso(id, request);
+        ProcesoDTO proceso = procesoService.updateProceso(id, request, abogadoId);
         return ResponseEntity.ok(ApiResponse.success(proceso, "Proceso actualizado exitosamente"));
     }
     
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar proceso", description = "Desactiva un proceso")
     public ResponseEntity<ApiResponse<Void>> deleteProceso(
-            @PathVariable @Positive Long id) {
+            @PathVariable @Positive Long id,
+        Authentication authentication) {
         
         procesoService.deleteProceso(id);
         return ResponseEntity.ok(ApiResponse.success(null, "Proceso eliminado exitosamente"));
@@ -138,6 +143,16 @@ public class ProcesoController {
         return ResponseEntity.ok(ApiResponse.success(procesos, "Procesos del abogado obtenidos exitosamente"));
     }
     
+    @GetMapping("/sistema")
+    @Operation(summary = "Obtener procesos del sistema", description = "Obtiene todos los procesos activos del sistema")
+    public ResponseEntity<ApiResponse<List<ProcesoDTO>>> getProcesosSistema(
+        Authentication authentication) {
+        Long createdById = getUserIdFromAuthentication(authentication);
+        
+        List<ProcesoDTO> procesos = procesoService.getProcesosSistema();
+        return ResponseEntity.ok(ApiResponse.success(procesos, "Procesos del sistema obtenidos exitosamente"));
+    }
+
     private Long getUserIdFromAuthentication(Authentication authentication) {
 
         if (authentication == null || !authentication.isAuthenticated()) {

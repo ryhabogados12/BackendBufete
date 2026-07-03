@@ -33,6 +33,7 @@ import com.bufete.backend.model.Plantilla;
 import com.bufete.backend.model.Proceso;
 import com.bufete.backend.model.Usuario;
 import com.bufete.backend.model.Categoria.TipoCategoria;
+import com.bufete.backend.model.Node.Modulo;
 import com.bufete.backend.model.Cliente;
 import com.bufete.backend.repository.CategoriaRepository;
 import com.bufete.backend.repository.ExpedienteRepository;
@@ -349,7 +350,7 @@ public class NodeService {
         }
     }
 
-    public FileUploadResponse uploadFileSentencia(SentenciaRequest request, Long uploadedById) {
+    public CreateSentenciaRequest uploadFileSentencia(SentenciaRequest request, Long uploadedById, String tipoDoc) {
 
         if (request.getFile().getContentType() == null) {
             throw new ValidationException("Es necesario subir un archivo ");
@@ -361,9 +362,11 @@ public class NodeService {
             FileBlob blob;
             String storageKey;
 
-            // Subir a S3
-            storageKey = s3Service.uploadFileSentencia(request.getFile(), request.getTipoDoc());
+            Modulo modulo_enum = Modulo.valueOf(tipoDoc);
 
+            // Subir a S3
+            storageKey = s3Service.uploadFileSentencia(request.getFile(), modulo_enum);
+            String modulo_archivo = modulo_enum.toString();
             // Crear blob
             blob = new FileBlob();
             blob.setStorageKey(storageKey);
@@ -382,20 +385,14 @@ public class NodeService {
             savedSentencia.setAbogadoId(uploadedById);
             savedSentencia.setFechaSentencia(LocalDate.now());
             savedSentencia.setClienteId(request.getClienteId());
-            savedSentencia.setTipoSentencia(request.getTipoDoc());
+            savedSentencia.setTipoSentencia(modulo_archivo);
             savedSentencia.setProcesoId(request.getProcesosId());
             savedSentencia.setFileBlobId(blob.getId());
 
+            System.out.println("id_client -> "+request.getClienteId());
             sentenciaService.crearSentencia(savedSentencia, uploadedById);
 
-            return FileUploadResponse.builder()
-                    .nodeId(null)
-                    .name(savedSentencia.getNombre())
-                    .sizeBytes(null)
-                    .mimeType(blob.getMimeType())
-                    .versionNumber(1)
-                    .message("Archivo subido exitosamente")
-                    .build();
+            return savedSentencia;
 
         } catch (Exception e) {
             log.error("Error subiendo archivo !", e);
@@ -590,4 +587,32 @@ public class NodeService {
         return exist;
     }
 
+
+    // Método para migración
+    @Transactional
+    public Node createNodeFromExistingS3File(
+            String s3Key,
+            Node parentNode,
+            Expediente expediente,
+            Usuario createdBy) {
+        
+        String fileName = extractFileNameFromKey(s3Key);
+        
+        // Crear node
+        Node node = Node.builder()
+            .expediente(expediente)
+            .parent(parentNode)
+            .type(Node.NodeType.FILE)
+            .name(fileName)
+            .modulo(Node.Modulo.DOCUMENTAL)
+            .createdBy(createdBy)
+            .isDeleted(false)
+            .build();
+        
+        return nodeRepository.save(node);
+    }
+    
+    private String extractFileNameFromKey(String s3Key) {
+        return s3Key.substring(s3Key.lastIndexOf('/') + 1);
+    }
 }

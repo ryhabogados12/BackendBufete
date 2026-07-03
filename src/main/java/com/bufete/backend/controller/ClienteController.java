@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bufete.backend.Dtos.ApiResponse;
 import com.bufete.backend.Dtos.PageResponse;
+import com.bufete.backend.Dtos.cliente.ClienteConsultarDTO;
 import com.bufete.backend.Dtos.cliente.ClienteDTO;
 import com.bufete.backend.Dtos.cliente.CreateClienteRequest;
 import com.bufete.backend.model.Cliente;
@@ -46,6 +47,8 @@ public class ClienteController {
         this.usuarioRepository = usuarioRepository;
     }
 
+    
+
     @GetMapping
     @Operation(summary = "Listar clientes", description = "Obtiene una lista paginada de clientes con filtros opcionales")
     public ResponseEntity<ApiResponse<PageResponse<ClienteDTO>>> getAllClientes(
@@ -70,6 +73,15 @@ public class ClienteController {
             @PathVariable @Positive Long id) {
 
         ClienteDTO cliente = clienteService.getClienteById(id);
+        return ResponseEntity.ok(ApiResponse.success(cliente, "Cliente obtenido exitosamente"));
+    }
+
+    @GetMapping("/consulta/{identificacion}")
+    @Operation(summary = "Obtener cliente por identificación", description = "Obtiene los detalles de un cliente específico")
+    public ResponseEntity<ApiResponse<ClienteConsultarDTO>> getClienteByIdentificacion(
+            @PathVariable String identificacion) {
+
+        ClienteConsultarDTO cliente = clienteService.getClienteByIdentificacion(identificacion);
         return ResponseEntity.ok(ApiResponse.success(cliente, "Cliente obtenido exitosamente"));
     }
 

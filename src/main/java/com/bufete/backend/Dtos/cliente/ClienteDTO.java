@@ -17,7 +17,16 @@ import lombok.NoArgsConstructor;
 public class ClienteDTO {
     private Long id;
     private TipoCliente tipoCliente;
+
     
+    
+    public ClienteDTO(String identificacion) {
+        this.nombre = "N/A";
+        this.identificacion = identificacion;
+        this.tipoDocumento = "CC";
+        this.email = "N@A";
+    }
+
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
     

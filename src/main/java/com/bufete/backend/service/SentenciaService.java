@@ -43,6 +43,34 @@ public class SentenciaService {
         this.expedienteRepository = expedienteRepository;
 
     }
+    
+
+    public List<SentenciaResponse> listarPorCliente(String idCliente) {
+
+        List<SentenciaResponse> lista = new ArrayList<>();
+
+        Cliente cliente = clienteRepository.findByIdentificacion(idCliente)
+            .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+
+        
+
+        List<Sentencia> listaAux = sentenciaRepository.findByClienteId(cliente.getId());
+        for (Sentencia sentencia : listaAux) {
+            SentenciaResponse resp = new SentenciaResponse(
+                sentencia.getId(),
+                sentencia.getNombre(),
+                sentencia.getTipoSentencia(),
+                sentencia.getFechaSentencia(),
+                sentencia.getProceso().getNombre(),
+                sentencia.getCliente().getIdentificacion(),
+                sentencia.getAbogado().getNombre(),
+                sentencia.getFileBlob().getId().toString(),
+                sentencia.getCreatedBy().getId());
+            lista.add(resp);
+        }
+
+        return lista;
+    }
 
     public List<SentenciaResponse> listarPorTipoSentencia(String tipoSentencia) {
 
@@ -72,9 +100,10 @@ public class SentenciaService {
         Proceso proceso = procesoRepository.findById(request.getProcesoId())
                 .orElseThrow(() -> new RuntimeException("Proceso no encontrado"));
 
+        System.out.println("request.getClienteId(): " + request.getClienteId());
+
         Cliente cliente = clienteRepository.findByIdentificacion(request.getClienteId())
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
-
         Usuario abogado = usuarioRepository.findById(request.getAbogadoId())
                 .orElseThrow(() -> new RuntimeException("Abogado no encontrado"));
 
@@ -90,8 +119,8 @@ public class SentenciaService {
                 .fechaSentencia(request.getFechaSentencia())
                 .proceso(proceso)
                 .cliente(cliente)
-                .abogado(abogado)
                 .fileBlob(fileBlob)
+                .abogado(abogado)
                 .createdBy(createdBy)
                 .estado(Sentencia.EstadoSentencia.PRIMERA_INSTANCIA)
                 .isDeleted(false)

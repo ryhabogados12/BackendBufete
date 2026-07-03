@@ -21,4 +21,7 @@ public interface SentenciaRepository extends JpaRepository<Sentencia, Long> {
 
     @Query("SELECT s FROM Sentencia s WHERE s.isDeleted = false")
     List<Sentencia> findAllNotDeleted();
+
+    @Query("SELECT s FROM Sentencia s WHERE s.cliente.id = :clienteId")
+    List<Sentencia> findByClienteId(@Param("clienteId") Long clienteId);
 }

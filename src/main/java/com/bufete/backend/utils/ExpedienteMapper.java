@@ -17,6 +17,7 @@ public interface ExpedienteMapper {
     
     @Mapping(target = "procesoNombre", source = "proceso.nombre")
     @Mapping(target = "procesoNumero", source = "proceso.numeroProceso")
+    @Mapping(target = "procesoId", source = "proceso.id")
     @Mapping(target = "createdByNombre", source = "createdBy.nombre")
     ExpedienteDTO toDTO(Expediente expediente);
     

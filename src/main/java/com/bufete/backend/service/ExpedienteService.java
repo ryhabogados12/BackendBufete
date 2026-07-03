@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,6 +50,16 @@ public class ExpedienteService {
         this.nodeService = nodeService;
         this.expedienteMapper = expedienteMapper;
     }
+
+    private Long getUserIdFromAuthentication(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new RuntimeException("Usuario no autenticado");
+        }
+        String email = authentication.getName();
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado: " + email));
+        return usuario.getId();
+    }
     
     @Transactional(readOnly = true)
     public PageResponse<ExpedienteDTO> getAllExpedientes(int page, int size, String sortBy, String sortDir,
@@ -58,7 +69,7 @@ public class ExpedienteService {
                    Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
         
-        Page<Expediente> expedientesPage = expedienteRepository.findWithFilters(nombre, estado, procesoId, pageable);
+        Page<Expediente> expedientesPage = expedienteRepository.findAllActive(pageable);
         
         List<ExpedienteDTO> expedientesDTOs = expedientesPage.getContent().stream()
                 .map(expediente -> {
@@ -79,6 +90,21 @@ public class ExpedienteService {
                 .last(expedientesPage.isLast())
                 .empty(expedientesPage.isEmpty())
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public List<ExpedienteDTO> getAllExpedientesByAbogado(Authentication authentication) {
+        Long abogadoId = getUserIdFromAuthentication(authentication);
+        
+        List<Expediente> expedientes = expedienteRepository.findByProcesoAbogadoResponsableIdAndIsDeletedFalse(abogadoId);
+        return expedientes.stream()
+                .map(expediente -> {
+                    ExpedienteDTO dto = expedienteMapper.toDTO(expediente);
+                    dto.setTotalDocumentos(expedienteRepository.countDocumentosByExpedienteId(expediente.getId()));
+                    dto.setTotalSize(expedienteRepository.getTotalSizeByExpedienteId(expediente.getId()));
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
     
     @Transactional(readOnly = true)

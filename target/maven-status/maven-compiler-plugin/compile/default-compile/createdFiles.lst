@@ -11,6 +11,7 @@ com\bufete\backend\Dtos\sentencia\SentenciaRequest.class
 com\bufete\backend\Dtos\MoveNodeRequest.class
 com\bufete\backend\model\Evento$EventoBuilder.class
 com\bufete\backend\service\ExpedienteService.class
+com\bufete\backend\controller\MigrationController.class
 com\bufete\backend\repository\ClienteRepository.class
 com\bufete\backend\utils\ClienteMapper.class
 com\bufete\backend\Dtos\plantilla\PlantillaDto.class
@@ -21,6 +22,7 @@ com\bufete\backend\Dtos\ApiResponse$ApiResponseBuilder.class
 com\bufete\backend\model\Node$Modulo.class
 com\bufete\backend\utils\ClienteMapperImpl$1.class
 com\bufete\backend\Dtos\usuario\CreateUsuarioRequest.class
+com\bufete\backend\controller\MigrationController$MigrationStatusDTO.class
 com\bufete\backend\repository\SentenciaRepository.class
 com\bufete\backend\service\ClienteService.class
 com\bufete\backend\utils\NodeMapper.class
@@ -30,6 +32,7 @@ com\bufete\backend\model\Expediente$EstadoExpediente.class
 com\bufete\backend\model\Cliente$ClienteBuilder.class
 com\bufete\backend\model\FileBlob$FileBlobBuilder.class
 com\bufete\backend\controller\ExpedienteController.class
+com\bufete\backend\Dtos\cliente\ClienteConsultarDTO$ClienteConsultarDTOBuilder.class
 com\bufete\backend\utils\ExpedienteMapper.class
 com\bufete\backend\model\Permiso$PermisoBuilder.class
 com\bufete\backend\Dtos\rol\RolConPermisoDTO.class
@@ -37,6 +40,7 @@ com\bufete\backend\Dtos\PageResponse$PageResponseBuilder.class
 com\bufete\backend\Dtos\cliente\CreateClienteRequest.class
 com\bufete\backend\Dtos\expediente\CreateExpedienteRequest.class
 com\bufete\backend\Dtos\rol\RolUpdateDTO.class
+com\bufete\backend\utils\MigrationReport$MigrationError.class
 com\bufete\backend\model\Categoria$CategoriaBuilder.class
 com\bufete\backend\Dtos\CreateFolderRequest.class
 com\bufete\backend\model\TipoEvento.class
@@ -63,6 +67,7 @@ com\bufete\backend\model\Node.class
 com\bufete\backend\Dtos\proceso\ProcesoDTO$ProcesoDTOBuilder.class
 com\bufete\backend\model\DocumentoContable$DocumentoContableBuilder.class
 com\bufete\backend\model\Sentencia$EstadoSentencia.class
+com\bufete\backend\Dtos\migracion\S3ObjectSummary.class
 com\bufete\backend\Dtos\RenameNodeRequest.class
 com\bufete\backend\repository\CategoriaRepository.class
 com\bufete\backend\Dtos\PageResponse.class
@@ -78,11 +83,13 @@ com\bufete\backend\Dtos\FileUploadResponse$FileUploadResponseBuilder.class
 com\bufete\backend\Dtos\UploadFileRequest.class
 com\bufete\backend\Dtos\folder\DownloadUrlDTO.class
 com\bufete\backend\Dtos\GlobalExceptionHandler.class
+com\bufete\backend\Dtos\proceso\EditProcesoRequest$EditProcesoRequestBuilder.class
 com\bufete\backend\Dtos\usuario\UpdateUsuarioRequest.class
 com\bufete\backend\model\Usuario$UsuarioBuilder.class
 com\bufete\backend\model\Proceso$EstadoProceso.class
 com\bufete\backend\utils\EventoMapper.class
 com\bufete\backend\Dtos\evento\CreateEventoRequest$CreateEventoRequestBuilder.class
+com\bufete\backend\utils\MigrationReport.class
 com\bufete\backend\Dtos\evento\TipoEventoDTO$TipoEventoDTOBuilder.class
 com\bufete\backend\Dtos\NodeDto.class
 com\bufete\backend\model\AuditLog$AuditAction.class
@@ -99,6 +106,7 @@ com\bufete\backend\Dtos\usuario\CreateUsuarioRequest$CreateUsuarioRequestBuilder
 com\bufete\backend\model\Plantilla$PlantillaBuilder.class
 com\bufete\backend\Dtos\usuario\EditUsuarioDTO.class
 com\bufete\backend\Dtos\cliente\CreateClienteRequest$CreateClienteRequestBuilder.class
+com\bufete\backend\Dtos\proceso\EditProcesoRequest.class
 com\bufete\backend\Dtos\rol\RolDTO$PermSimple.class
 com\bufete\backend\model\Cliente.class
 com\bufete\backend\Dtos\evento\TipoEventoDTO.class
@@ -145,6 +153,7 @@ com\bufete\backend\controller\ClienteController.class
 com\bufete\backend\Dtos\sentencia\SentenciaRequest$SentenciaRequestBuilder.class
 com\bufete\backend\repository\FileBlobRepository.class
 com\bufete\backend\Dtos\folder\FileStorageResult.class
+com\bufete\backend\Dtos\cliente\ClienteConsultarDTO.class
 com\bufete\backend\model\NodePermission$NodePermissionBuilder.class
 com\bufete\backend\Dtos\folder\FileUploadRequest.class
 com\bufete\backend\utils\UsuarioMapperImpl.class
@@ -160,6 +169,7 @@ com\bufete\backend\Dtos\cliente\ClienteDTO$ClienteDTOBuilder.class
 com\bufete\backend\Dtos\proceso\CreateProcesoRequest$CreateProcesoRequestBuilder.class
 com\bufete\backend\Dtos\folder\FileUploadRequest$FileUploadRequestBuilder.class
 com\bufete\backend\model\DocumentoContable.class
+com\bufete\backend\service\S3MigrationService.class
 com\bufete\backend\service\ProcesoService.class
 com\bufete\backend\model\Proceso.class
 com\bufete\backend\Dtos\usuario\UpdateUsuarioRequest$UpdateUsuarioRequestBuilder.class

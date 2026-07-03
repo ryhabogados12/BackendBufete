@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-22T13:21:34-0500",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251118-1623, environment: Java 21.0.9 (Eclipse Adoptium)"
+    date = "2026-02-04T17:10:32-0500",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.45.0.v20260128-0750, environment: Java 21.0.9 (Eclipse Adoptium)"
 )
 @Component
 public class ExpedienteMapperImpl implements ExpedienteMapper {
@@ -28,6 +28,7 @@ public class ExpedienteMapperImpl implements ExpedienteMapper {
 
         expedienteDTO.procesoNombre( expedienteProcesoNombre( expediente ) );
         expedienteDTO.procesoNumero( expedienteProcesoNumeroProceso( expediente ) );
+        expedienteDTO.procesoId( expedienteProcesoId( expediente ) );
         expedienteDTO.createdByNombre( expedienteCreatedByNombre( expediente ) );
         expedienteDTO.descripcion( expediente.getDescripcion() );
         expedienteDTO.estado( expediente.getEstado() );
@@ -116,6 +117,21 @@ public class ExpedienteMapperImpl implements ExpedienteMapper {
             return null;
         }
         return numeroProceso;
+    }
+
+    private Long expedienteProcesoId(Expediente expediente) {
+        if ( expediente == null ) {
+            return null;
+        }
+        Proceso proceso = expediente.getProceso();
+        if ( proceso == null ) {
+            return null;
+        }
+        Long id = proceso.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
     }
 
     private String expedienteCreatedByNombre(Expediente expediente) {

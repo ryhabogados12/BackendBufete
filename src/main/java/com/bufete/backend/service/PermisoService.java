@@ -18,6 +18,7 @@ public class PermisoService {
 
     @Transactional(readOnly = true)
     public List<PermisoDTO> listarPermisos(){
+        System.out.println("Listando permisos..."+ permisoRepository.findAll().size());
         return permisoRepository.listarTodosPermisos();
     }
 }

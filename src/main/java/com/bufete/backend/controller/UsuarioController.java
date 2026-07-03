@@ -108,13 +108,13 @@ public class UsuarioController {
     }
     
     @PutMapping("/{id}/change-password")
-    @Operation(summary = "Cambiar contraseña", description = "Cambia la contraseña de un usuario")
+    @Operation(summary = "Cambiar contrasena", description = "Cambia la contrasena de un usuario")
     public ResponseEntity<ApiResponse<UsuarioDTO>> changePassword(
             @PathVariable @Positive Long id,
             @Valid @RequestBody ChangePasswordRequest request) {
 
         UsuarioDTO usuario = usuarioService.changePassword(id, request.getOldPassword(), request.getNewPassword());
-        return ResponseEntity.ok(ApiResponse.success(usuario, "Contraseña cambiada exitosamente"));
+        return ResponseEntity.ok(ApiResponse.success(usuario, "Contrasena cambiada exitosamente"));
     }
     
     

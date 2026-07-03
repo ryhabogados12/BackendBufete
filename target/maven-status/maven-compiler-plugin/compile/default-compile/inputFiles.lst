@@ -11,6 +11,7 @@ C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\controller\ClienteController.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\controller\EventoController.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\controller\ExpedienteController.java
+C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\controller\MigrationController.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\controller\NodeController.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\controller\PermisosController.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\controller\PlantillaController.java
@@ -23,6 +24,7 @@ C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\auth\LoginDTO.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\categoria\CategoriaDTO.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\ChangePasswordRequest.java
+C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\cliente\ClienteConsultarDTO.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\cliente\ClienteDTO.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\cliente\CreateClienteRequest.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\CreateFolderRequest.java
@@ -42,12 +44,14 @@ C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\folder\NodeDTO.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\folder\PlantillaRequest.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\GlobalExceptionHandler.java
+C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\migracion\S3ObjectSummary.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\MoveNodeRequest.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\NodeDto.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\PageResponse.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\permiso\PermisoDTO.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\plantilla\PlantillaDto.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\proceso\CreateProcesoRequest.java
+C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\proceso\EditProcesoRequest.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\proceso\ProcesoDTO.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\proceso\UpdateEstadoProcesoRequest.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\Dtos\RenameNodeRequest.java
@@ -107,12 +111,14 @@ C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\service\PlantillaService.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\service\ProcesoService.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\service\RolService.java
+C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\service\S3MigrationService.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\service\S3Service.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\service\SentenciaService.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\service\UsuarioService.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\utils\ClienteMapper.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\utils\EventoMapper.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\utils\ExpedienteMapper.java
+C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\utils\MigrationReport.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\utils\NodeMapper.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\utils\ProcesoMapper.java
 C:\Users\Braylex\Documents\GitHub\BufeteBackEnd\src\main\java\com\bufete\backend\utils\UsuarioMapper.java

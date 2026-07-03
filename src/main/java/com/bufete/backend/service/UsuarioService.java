@@ -61,7 +61,7 @@ public class UsuarioService implements UserDetailsService {
                    Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
         
-        Page<Usuario> usuariosPage = usuarioRepository.findWithFilters(nombre, apellido, email, activo, pageable);
+        Page<Usuario> usuariosPage = usuarioRepository.findAllActive(pageable);
         List<UsuarioDTO> usuariosDTOs = usuarioMapper.toDTOList(usuariosPage.getContent());
         
         return PageResponse.<UsuarioDTO>builder()
@@ -89,7 +89,7 @@ public class UsuarioService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado con ID: " + id));
 
-        EditUsuarioDTO edituser = new EditUsuarioDTO(usuario.getId(), usuario.getNombre(), usuario.getApellido(), usuario.getEmail(), usuario.getRol().getId(), usuario.getContraseña());
+        EditUsuarioDTO edituser = new EditUsuarioDTO(usuario.getId(), usuario.getNombre(), usuario.getApellido(), usuario.getEmail(), usuario.getRol().getId(), usuario.getContrasena());
         return edituser;
     }
     
@@ -108,7 +108,7 @@ public class UsuarioService implements UserDetailsService {
         
         // Crear usuario
         Usuario usuario = usuarioMapper.toEntity(request);
-        usuario.setContraseña(passwordEncoder.encode(request.getContrasena()));
+        usuario.setContrasena(passwordEncoder.encode(request.getContrasena()));
         usuario.setRol(rol);
         
         Usuario savedUsuario = usuarioRepository.save(usuario);
@@ -167,11 +167,11 @@ public class UsuarioService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado con ID: " + id));
 
-        if (!passwordEncoder.matches(oldPassword, usuario.getContraseña())) {
-            throw new ValidationException("La contraseña actual es incorrecta");
+        if (!passwordEncoder.matches(oldPassword, usuario.getContrasena())) {
+            throw new ValidationException("La contrasena actual es incorrecta");
         }
 
-        usuario.setContraseña(passwordEncoder.encode(newPassword));
+        usuario.setContrasena(passwordEncoder.encode(newPassword));
         usuario.setNuevoUsuario(false);
         Usuario updatedUsuario = usuarioRepository.save(usuario);
 
@@ -216,7 +216,7 @@ public class UsuarioService implements UserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
-                user.getContraseña(),
+                user.getContrasena(),
                 authorities);
     }
 }

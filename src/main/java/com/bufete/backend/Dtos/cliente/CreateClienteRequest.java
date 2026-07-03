@@ -15,6 +15,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CreateClienteRequest {
+
+    public CreateClienteRequest(String identificacion) {
+        this.tipoCliente = ClienteDTO.TipoCliente.NATURAL;
+        this.nombre = "N/A";
+        this.identificacion = identificacion;
+        this.tipoDocumento = "CC";
+    }
     @NotNull(message = "El tipo de cliente es obligatorio")
     private ClienteDTO.TipoCliente tipoCliente;
     

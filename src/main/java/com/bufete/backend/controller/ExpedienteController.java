@@ -102,7 +102,8 @@ public class ExpedienteController {
     @Operation(summary = "Actualizar expediente")
     public ResponseEntity<ApiResponse<ExpedienteDTO>> updateExpediente(
             @PathVariable @Positive Long id,
-            @Valid @RequestBody CreateExpedienteRequest request) {
+            @Valid @RequestBody CreateExpedienteRequest request,
+        Authentication authentication) {
         
         ExpedienteDTO expediente = expedienteService.updateExpediente(id, request);
         return ResponseEntity.ok(ApiResponse.success(expediente, "Expediente actualizado exitosamente"));

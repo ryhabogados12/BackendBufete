@@ -1,6 +1,7 @@
 package com.bufete.backend.utils;
 
 import com.bufete.backend.Dtos.proceso.CreateProcesoRequest;
+import com.bufete.backend.Dtos.proceso.EditProcesoRequest;
 import com.bufete.backend.Dtos.proceso.ProcesoDTO;
 import com.bufete.backend.model.Cliente;
 import com.bufete.backend.model.Proceso;
@@ -12,8 +13,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-22T13:21:35-0500",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251118-1623, environment: Java 21.0.9 (Eclipse Adoptium)"
+    date = "2026-07-03T09:22:34-0500",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.46.100.v20260624-0231, environment: Java 21.0.11 (Eclipse Adoptium)"
 )
 @Component
 public class ProcesoMapperImpl implements ProcesoMapper {
@@ -26,25 +27,27 @@ public class ProcesoMapperImpl implements ProcesoMapper {
 
         ProcesoDTO.ProcesoDTOBuilder procesoDTO = ProcesoDTO.builder();
 
+        procesoDTO.clienteId( procesoClienteIdentificacion( proceso ) );
         procesoDTO.clienteNombre( procesoClienteNombre( proceso ) );
+        procesoDTO.abogadoResponsableId( procesoAbogadoResponsableId( proceso ) );
         procesoDTO.createdByNombre( procesoCreatedByNombre( proceso ) );
-        procesoDTO.activo( proceso.getActivo() );
-        procesoDTO.createdAt( proceso.getCreatedAt() );
-        procesoDTO.cuantia( proceso.getCuantia() );
-        procesoDTO.demandado( proceso.getDemandado() );
-        procesoDTO.demandante( proceso.getDemandante() );
+        procesoDTO.id( proceso.getId() );
+        procesoDTO.numeroProceso( proceso.getNumeroProceso() );
+        procesoDTO.nombre( proceso.getNombre() );
         procesoDTO.descripcion( proceso.getDescripcion() );
+        procesoDTO.tipoProceso( proceso.getTipoProceso() );
         procesoDTO.estado( proceso.getEstado() );
-        procesoDTO.fechaCierre( proceso.getFechaCierre() );
         procesoDTO.fechaCreacion( proceso.getFechaCreacion() );
         procesoDTO.fechaInicio( proceso.getFechaInicio() );
-        procesoDTO.id( proceso.getId() );
+        procesoDTO.fechaCierre( proceso.getFechaCierre() );
         procesoDTO.juzgado( proceso.getJuzgado() );
-        procesoDTO.nombre( proceso.getNombre() );
-        procesoDTO.numeroProceso( proceso.getNumeroProceso() );
-        procesoDTO.observaciones( proceso.getObservaciones() );
         procesoDTO.radicado( proceso.getRadicado() );
-        procesoDTO.tipoProceso( proceso.getTipoProceso() );
+        procesoDTO.demandante( proceso.getDemandante() );
+        procesoDTO.demandado( proceso.getDemandado() );
+        procesoDTO.cuantia( proceso.getCuantia() );
+        procesoDTO.observaciones( proceso.getObservaciones() );
+        procesoDTO.activo( proceso.getActivo() );
+        procesoDTO.createdAt( proceso.getCreatedAt() );
         procesoDTO.updatedAt( proceso.getUpdatedAt() );
 
         procesoDTO.abogadoResponsableNombre( proceso.getAbogadoResponsable().getNombre() + " " + proceso.getAbogadoResponsable().getApellido() );
@@ -74,23 +77,23 @@ public class ProcesoMapperImpl implements ProcesoMapper {
 
         Proceso.ProcesoBuilder proceso = Proceso.builder();
 
-        proceso.cuantia( request.getCuantia() );
-        proceso.demandado( request.getDemandado() );
-        proceso.demandante( request.getDemandante() );
+        proceso.numeroProceso( request.getNumeroProceso() );
+        proceso.nombre( request.getNombre() );
         proceso.descripcion( request.getDescripcion() );
+        proceso.tipoProceso( request.getTipoProceso() );
         proceso.fechaInicio( request.getFechaInicio() );
         proceso.juzgado( request.getJuzgado() );
-        proceso.nombre( request.getNombre() );
-        proceso.numeroProceso( request.getNumeroProceso() );
-        proceso.observaciones( request.getObservaciones() );
         proceso.radicado( request.getRadicado() );
-        proceso.tipoProceso( request.getTipoProceso() );
+        proceso.demandante( request.getDemandante() );
+        proceso.demandado( request.getDemandado() );
+        proceso.cuantia( request.getCuantia() );
+        proceso.observaciones( request.getObservaciones() );
 
         return proceso.build();
     }
 
     @Override
-    public void updateEntity(Proceso proceso, CreateProcesoRequest request) {
+    public void updateEntity(Proceso proceso, EditProcesoRequest request) {
         if ( request == null ) {
             return;
         }
@@ -107,27 +110,21 @@ public class ProcesoMapperImpl implements ProcesoMapper {
         if ( request.getTipoProceso() != null ) {
             proceso.setTipoProceso( request.getTipoProceso() );
         }
-        if ( request.getFechaInicio() != null ) {
-            proceso.setFechaInicio( request.getFechaInicio() );
+    }
+
+    private String procesoClienteIdentificacion(Proceso proceso) {
+        if ( proceso == null ) {
+            return null;
         }
-        if ( request.getJuzgado() != null ) {
-            proceso.setJuzgado( request.getJuzgado() );
+        Cliente cliente = proceso.getCliente();
+        if ( cliente == null ) {
+            return null;
         }
-        if ( request.getRadicado() != null ) {
-            proceso.setRadicado( request.getRadicado() );
+        String identificacion = cliente.getIdentificacion();
+        if ( identificacion == null ) {
+            return null;
         }
-        if ( request.getDemandante() != null ) {
-            proceso.setDemandante( request.getDemandante() );
-        }
-        if ( request.getDemandado() != null ) {
-            proceso.setDemandado( request.getDemandado() );
-        }
-        if ( request.getCuantia() != null ) {
-            proceso.setCuantia( request.getCuantia() );
-        }
-        if ( request.getObservaciones() != null ) {
-            proceso.setObservaciones( request.getObservaciones() );
-        }
+        return identificacion;
     }
 
     private String procesoClienteNombre(Proceso proceso) {
@@ -143,6 +140,21 @@ public class ProcesoMapperImpl implements ProcesoMapper {
             return null;
         }
         return nombre;
+    }
+
+    private Long procesoAbogadoResponsableId(Proceso proceso) {
+        if ( proceso == null ) {
+            return null;
+        }
+        Usuario abogadoResponsable = proceso.getAbogadoResponsable();
+        if ( abogadoResponsable == null ) {
+            return null;
+        }
+        Long id = abogadoResponsable.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
     }
 
     private String procesoCreatedByNombre(Proceso proceso) {

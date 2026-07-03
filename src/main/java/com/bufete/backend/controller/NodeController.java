@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,10 +24,16 @@ import com.bufete.backend.Dtos.folder.DownloadUrlDTO;
 import com.bufete.backend.Dtos.folder.FileUploadRequest;
 import com.bufete.backend.Dtos.folder.NodeDTO;
 import com.bufete.backend.Dtos.folder.PlantillaRequest;
+import com.bufete.backend.Dtos.proceso.ProcesoDTO;
+import com.bufete.backend.Dtos.sentencia.CreateSentenciaRequest;
 import com.bufete.backend.Dtos.sentencia.SentenciaRequest;
+import com.bufete.backend.model.Cliente;
 import com.bufete.backend.model.Usuario;
 import com.bufete.backend.repository.UsuarioRepository;
+import com.bufete.backend.service.ClienteService;
 import com.bufete.backend.service.NodeService;
+import com.bufete.backend.service.ProcesoService;
+import com.bufete.backend.service.SentenciaService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -43,11 +48,17 @@ import lombok.extern.slf4j.Slf4j;
 public class NodeController {
     
     private final NodeService nodeService;
+    private final SentenciaService sentenciaService;
     private final UsuarioRepository usuarioRepository;
+    private final ClienteService clienteService;
+    private final ProcesoService procesoService;    
     
-    public NodeController(NodeService nodeService, UsuarioRepository usuarioRepository) {
+    public NodeController(NodeService nodeService, SentenciaService sentenciaService, UsuarioRepository usuarioRepository, ClienteService clienteService, ProcesoService procesoService    ) {
         this.nodeService = nodeService;
+        this.sentenciaService = sentenciaService;
         this.usuarioRepository = usuarioRepository;
+        this.clienteService = clienteService;
+        this.procesoService = procesoService;
     }
     
     @GetMapping("/{parentId}/children")
@@ -112,13 +123,13 @@ public class NodeController {
 
     @PostMapping("/uploadSentencia")
     @Operation(summary = "Subir archivo")
-    public ResponseEntity<ApiResponse<FileUploadResponse>> uploadSentencia(
+    public ResponseEntity<ApiResponse<CreateSentenciaRequest>> uploadSentencia(
             @RequestParam("file") MultipartFile file,
             @RequestParam String procesoId,
             @RequestParam(required = false) String expedienteId,
-            @RequestParam(required = false) String clienteId,
             @RequestParam(required = false) String nombre,
             @RequestParam(required = false) String description,
+            @RequestParam(required = false) String tipoDoc,
             
             Authentication authentication) {
         
@@ -128,21 +139,23 @@ public class NodeController {
         if(expedienteId != null){
             Long expID = Long.valueOf(expedienteId);
         }
-        
+
+        String id_cliente = procesoService.getProcesoById(procID).getClienteId().toString();
+        System.out.println("id_cliente: " + id_cliente);
 
         SentenciaRequest request = SentenciaRequest.builder()
                 .file(file)
                 .description(description)
                 .procesosId(procID)
                 .expedId(procID)
-                .clienteId(clienteId)
+                .clienteId(id_cliente)
                 .nombre(nombre)
-                .build();
-        
-        FileUploadResponse fileNode = nodeService.uploadFileSentencia(request, uploadedById);
+                .build();        
+
+        CreateSentenciaRequest sentSaved = nodeService.uploadFileSentencia(request, uploadedById, tipoDoc);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.success(fileNode, "Archivo subido exitosamente"));
+                .body(ApiResponse.success(sentSaved, "Archivo subido exitosamente"));
     }
     
     @PostMapping("/uploadFile")

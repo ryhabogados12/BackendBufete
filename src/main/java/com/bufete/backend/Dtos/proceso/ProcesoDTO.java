@@ -29,7 +29,7 @@ public class ProcesoDTO {
     private LocalDate fechaInicio;
     private LocalDate fechaCierre;
     @NotNull(message = "El cliente es obligatorio")
-    private Long clienteId;
+    private String clienteId;
     private String clienteNombre;
     @NotNull(message = "El abogado responsable es obligatorio")
     private Long abogadoResponsableId;
@@ -102,10 +102,10 @@ public class ProcesoDTO {
     public void setFechaCierre(LocalDate fechaCierre) {
         this.fechaCierre = fechaCierre;
     }
-    public Long getClienteId() {
+    public String getClienteId() {
         return clienteId;
     }
-    public void setClienteId(Long clienteId) {
+    public void setClienteId(String clienteId) {
         this.clienteId = clienteId;
     }
     public String getClienteNombre() {

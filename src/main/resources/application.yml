@@ -1,19 +1,26 @@
 server:
-  port: 8081
+  port: 8080
 
 spring:
   application:
     name: backend-bufete
 
   datasource:
-    url: jdbc:postgresql://ep-curly-wave-ady17a0d-pooler.c-2.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=npg_UPSVbM5tA2lL&sslmode=require&channelBinding=require
+    url: jdbc:postgresql://ep-royal-pond-adc22g83-pooler.c-2.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=npg_nX09SPHKbImB&sslmode=require&channelBinding=require
     username: neondb_owner
-    password: npg_UPSVbM5tA2lL
+    password: npg_nX09SPHKbIm
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 2
+      minimum-idle: 0
+      max-lifetime: 1800000      # 30 minutos
+      idle-timeout: 600000       # 10 minuto
+      keepalive-time: 30000     # 5 mimutos
+      connection-timeout: 300000
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: false
     properties:
       hibernate:
@@ -31,11 +38,11 @@ spring:
       enabled: true
 
 aws:
-  access-key: AKIAUULD6N3ICM6FNXNN
-  secret-key: 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
-  region: sa-east-1
+  access-key: AKIA33UF7G65HPZ64XE3
+  secret-key: 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
+  region: us-east-2
   s3:
-    bucket-name: bucketbufete
+    bucket-name: bucketbufete2
     base-path: documentos
 
 logging:

@@ -6,10 +6,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bufete.backend.Dtos.PageResponse;
+import com.bufete.backend.Dtos.cliente.ClienteConsultarDTO;
 import com.bufete.backend.Dtos.cliente.ClienteDTO;
 import com.bufete.backend.Dtos.cliente.CreateClienteRequest;
 import com.bufete.backend.model.Cliente;
@@ -38,6 +40,16 @@ public class ClienteService {
         this.usuarioRepository = usuarioRepository;
         this.clienteMapper = clienteMapper;
     }
+
+    private Long getUserIdFromAuthentication(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new RuntimeException("Usuario no autenticado");
+        }
+        String email = authentication.getName();
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado: " + email));
+        return usuario.getId();
+    }
     
     @Transactional(readOnly = true)
     public PageResponse<ClienteDTO> getAllClientes(int page, int size, String sortBy, String sortDir,
@@ -47,7 +59,7 @@ public class ClienteService {
                    Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
         
-        Page<Cliente> clientesPage = clienteRepository.findWithFilters(nombre, identificacion, tipoCliente, activo, pageable);
+        Page<Cliente> clientesPage = clienteRepository.findAllActive(pageable);
         List<ClienteDTO> clientesDTOs = clienteMapper.toDTOList(clientesPage.getContent());
         
         return PageResponse.<ClienteDTO>builder()
@@ -67,6 +79,21 @@ public class ClienteService {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado con ID: " + id));
         return clienteMapper.toDTO(cliente);
+    }
+
+    @Transactional(readOnly = true)
+    public ClienteConsultarDTO getClienteByIdentificacion(String identificacion) {
+        Cliente cliente = clienteRepository.findByIdentificacion(identificacion)
+                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado con identificación: " + identificacion));
+
+        
+        ClienteConsultarDTO clienteDTO = new ClienteConsultarDTO();
+        clienteDTO.setNombre(cliente.getNombre());
+        clienteDTO.setApellido(cliente.getApellido());
+        clienteDTO.setIdentificacion(cliente.getIdentificacion());
+        clienteDTO.setTipoDocumento(cliente.getTipoDocumento());
+
+        return clienteDTO;
     }
     
     public ClienteDTO createCliente(CreateClienteRequest request, Long createdById) {

@@ -106,7 +106,7 @@ public class Node {
     }
     
     public enum Modulo {
-        DOCUMENTAL, CONTABLE, PLANTILLAS
+        DOCUMENTAL, CONTABLE, PLANTILLAS, SENTENCIA, CONSTANCIA
     }
 
     public UUID getId() {

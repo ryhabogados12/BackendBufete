@@ -21,8 +21,8 @@ public class CreateUsuarioRequest {
     
     private String identificacion;
     
-    @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 5, message = "La contraseña debe tener al menos 8 caracteres")
+    @NotBlank(message = "La contrasena es obligatoria")
+    @Size(min = 5, message = "La contrasena debe tener al menos 8 caracteres")
     private String contrasena;
     
     private String telefono;
@@ -67,8 +67,8 @@ public class CreateUsuarioRequest {
         return contrasena;
     }
 
-    public void setContrasena(String contraseña) {
-        this.contrasena = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public String getTelefono() {
