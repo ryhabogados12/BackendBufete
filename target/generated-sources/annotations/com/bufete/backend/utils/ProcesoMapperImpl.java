@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-07-03T09:22:34-0500",
+    date = "2026-07-03T14:02:03-0500",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.46.100.v20260624-0231, environment: Java 21.0.11 (Eclipse Adoptium)"
 )
 @Component
@@ -31,23 +31,23 @@ public class ProcesoMapperImpl implements ProcesoMapper {
         procesoDTO.clienteNombre( procesoClienteNombre( proceso ) );
         procesoDTO.abogadoResponsableId( procesoAbogadoResponsableId( proceso ) );
         procesoDTO.createdByNombre( procesoCreatedByNombre( proceso ) );
-        procesoDTO.id( proceso.getId() );
-        procesoDTO.numeroProceso( proceso.getNumeroProceso() );
-        procesoDTO.nombre( proceso.getNombre() );
-        procesoDTO.descripcion( proceso.getDescripcion() );
-        procesoDTO.tipoProceso( proceso.getTipoProceso() );
-        procesoDTO.estado( proceso.getEstado() );
-        procesoDTO.fechaCreacion( proceso.getFechaCreacion() );
-        procesoDTO.fechaInicio( proceso.getFechaInicio() );
-        procesoDTO.fechaCierre( proceso.getFechaCierre() );
-        procesoDTO.juzgado( proceso.getJuzgado() );
-        procesoDTO.radicado( proceso.getRadicado() );
-        procesoDTO.demandante( proceso.getDemandante() );
-        procesoDTO.demandado( proceso.getDemandado() );
-        procesoDTO.cuantia( proceso.getCuantia() );
-        procesoDTO.observaciones( proceso.getObservaciones() );
         procesoDTO.activo( proceso.getActivo() );
         procesoDTO.createdAt( proceso.getCreatedAt() );
+        procesoDTO.cuantia( proceso.getCuantia() );
+        procesoDTO.demandado( proceso.getDemandado() );
+        procesoDTO.demandante( proceso.getDemandante() );
+        procesoDTO.descripcion( proceso.getDescripcion() );
+        procesoDTO.estado( proceso.getEstado() );
+        procesoDTO.fechaCierre( proceso.getFechaCierre() );
+        procesoDTO.fechaCreacion( proceso.getFechaCreacion() );
+        procesoDTO.fechaInicio( proceso.getFechaInicio() );
+        procesoDTO.id( proceso.getId() );
+        procesoDTO.juzgado( proceso.getJuzgado() );
+        procesoDTO.nombre( proceso.getNombre() );
+        procesoDTO.numeroProceso( proceso.getNumeroProceso() );
+        procesoDTO.observaciones( proceso.getObservaciones() );
+        procesoDTO.radicado( proceso.getRadicado() );
+        procesoDTO.tipoProceso( proceso.getTipoProceso() );
         procesoDTO.updatedAt( proceso.getUpdatedAt() );
 
         procesoDTO.abogadoResponsableNombre( proceso.getAbogadoResponsable().getNombre() + " " + proceso.getAbogadoResponsable().getApellido() );
@@ -77,17 +77,17 @@ public class ProcesoMapperImpl implements ProcesoMapper {
 
         Proceso.ProcesoBuilder proceso = Proceso.builder();
 
-        proceso.numeroProceso( request.getNumeroProceso() );
-        proceso.nombre( request.getNombre() );
+        proceso.cuantia( request.getCuantia() );
+        proceso.demandado( request.getDemandado() );
+        proceso.demandante( request.getDemandante() );
         proceso.descripcion( request.getDescripcion() );
-        proceso.tipoProceso( request.getTipoProceso() );
         proceso.fechaInicio( request.getFechaInicio() );
         proceso.juzgado( request.getJuzgado() );
-        proceso.radicado( request.getRadicado() );
-        proceso.demandante( request.getDemandante() );
-        proceso.demandado( request.getDemandado() );
-        proceso.cuantia( request.getCuantia() );
+        proceso.nombre( request.getNombre() );
+        proceso.numeroProceso( request.getNumeroProceso() );
         proceso.observaciones( request.getObservaciones() );
+        proceso.radicado( request.getRadicado() );
+        proceso.tipoProceso( request.getTipoProceso() );
 
         return proceso.build();
     }
