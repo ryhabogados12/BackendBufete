@@ -40,16 +40,13 @@ public class WebSecutity implements WebMvcConfigurer {
 
         http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                /* .authorizeHttpRequests((authorize) -> authorize
+                .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/api/auth/signin").permitAll()
                         .requestMatchers("/api/clientes/**").permitAll()
                         .requestMatchers("/api/expedientes/**").permitAll()
                         .requestMatchers("/api/sentencias/**").permitAll()
                         .requestMatchers("/api/nodes/**").permitAll()
-                        .anyRequest().authenticated()) */
-                .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/auth/**").permitAll() // Permitir tu ruta de login
-                    .anyRequest().authenticated())
+                        .anyRequest().authenticated())                
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(authenticationEntryPoint));
 
@@ -64,5 +61,6 @@ public class WebSecutity implements WebMvcConfigurer {
             .allowedOrigins("*")
             .allowedMethods("*")
             .allowedHeaders("*");
+            
     }    
 }
