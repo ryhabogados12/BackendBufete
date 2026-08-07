@@ -61,6 +61,5 @@ public class WebSecutity implements WebMvcConfigurer {
             .allowedOrigins("*")
             .allowedMethods("*")
             .allowedHeaders("*");
-            
     }    
 }
