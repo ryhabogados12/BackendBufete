@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-08-07T12:39:13-0500",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.46.100.v20260624-0231, environment: Java 21.0.11 (Eclipse Adoptium)"
+    date = "2026-09-23T17:05:50-0500",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Oracle Corporation)"
 )
 @Component
 public class UsuarioMapperImpl implements UsuarioMapper {
@@ -28,18 +28,18 @@ public class UsuarioMapperImpl implements UsuarioMapper {
 
         usuarioDTO.setRolNombre( usuarioRolNombre( usuario ) );
         usuarioDTO.setRolId( usuarioRolId( usuario ) );
-        usuarioDTO.setActivo( usuario.getActivo() );
-        usuarioDTO.setApellido( usuario.getApellido() );
-        usuarioDTO.setCreatedAt( usuario.getCreatedAt() );
-        usuarioDTO.setDireccion( usuario.getDireccion() );
-        usuarioDTO.setEmail( usuario.getEmail() );
         usuarioDTO.setId( usuario.getId() );
-        usuarioDTO.setIdentificacion( usuario.getIdentificacion() );
-        usuarioDTO.setLastLogin( usuario.getLastLogin() );
         usuarioDTO.setNombre( usuario.getNombre() );
-        usuarioDTO.setNuevoUsuario( usuario.getNuevoUsuario() );
+        usuarioDTO.setApellido( usuario.getApellido() );
+        usuarioDTO.setEmail( usuario.getEmail() );
+        usuarioDTO.setIdentificacion( usuario.getIdentificacion() );
         usuarioDTO.setTelefono( usuario.getTelefono() );
+        usuarioDTO.setDireccion( usuario.getDireccion() );
+        usuarioDTO.setActivo( usuario.getActivo() );
+        usuarioDTO.setNuevoUsuario( usuario.getNuevoUsuario() );
+        usuarioDTO.setCreatedAt( usuario.getCreatedAt() );
         usuarioDTO.setUpdatedAt( usuario.getUpdatedAt() );
+        usuarioDTO.setLastLogin( usuario.getLastLogin() );
 
         return usuarioDTO;
     }
@@ -66,13 +66,13 @@ public class UsuarioMapperImpl implements UsuarioMapper {
 
         Usuario.UsuarioBuilder usuario = Usuario.builder();
 
+        usuario.nombre( request.getNombre() );
         usuario.apellido( request.getApellido() );
-        usuario.contrasena( request.getContrasena() );
-        usuario.direccion( request.getDireccion() );
         usuario.email( request.getEmail() );
         usuario.identificacion( request.getIdentificacion() );
-        usuario.nombre( request.getNombre() );
+        usuario.contrasena( request.getContrasena() );
         usuario.telefono( request.getTelefono() );
+        usuario.direccion( request.getDireccion() );
 
         return usuario.build();
     }

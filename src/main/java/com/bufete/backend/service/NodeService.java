@@ -20,6 +20,7 @@ import com.bufete.backend.Dtos.folder.CreateFolderRequest;
 import com.bufete.backend.Dtos.folder.DownloadUrlDTO;
 import com.bufete.backend.Dtos.folder.FileStorageResult;
 import com.bufete.backend.Dtos.folder.FileUploadRequest;
+import com.bufete.backend.Dtos.folder.NodeBasicDTO;
 import com.bufete.backend.Dtos.folder.NodeDTO;
 import com.bufete.backend.Dtos.folder.PlantillaRequest;
 import com.bufete.backend.Dtos.sentencia.CreateSentenciaRequest;
@@ -89,8 +90,20 @@ public class NodeService {
     @Transactional(readOnly = true)
     public List<NodeDTO> getNodeChildren(UUID parentId) {
         List<Node> children = nodeRepository.findByParentIdAndIsDeletedFalse(parentId);
+
+
+
         return children.stream()
                 .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<NodeBasicDTO> getNodeInfoChildren(UUID parentId) {
+        List<Node> children = nodeRepository.findByParentIdAndIsDeletedFalse(parentId);
+
+        return children.stream()
+                .map(this::convertToBasicDTO)
                 .collect(Collectors.toList());
     }
 
@@ -175,73 +188,59 @@ public class NodeService {
             Optional<FileBlob> existingBlob = fileBlobRepository
                     .findByChecksumSha256AndSizeBytes(checksum, request.getFile().getSize());
 
-            FileBlob blob;
-            String storageKey;
+            Node fileNode = new Node();
+            fileNode.setExpediente(parent.getExpediente());
+            fileNode.setParent(parent);
+            fileNode.setType(Node.NodeType.FILE);
+            fileNode.setName(fileName);
+            fileNode.setDescription(request.getDescription());
+            fileNode.setCreatedBy(uploadedBy);
+            fileNode.setCreatedAt(Instant.now());
+            fileNode.setIsDeleted(false);
+            fileNode.setSizeBytes(request.getFile().getSize());
+            Node savedNode = nodeRepository.save(fileNode);
 
+            FileBlob blob;
             if (existingBlob.isPresent()) {
                 blob = existingBlob.get();
-                storageKey = blob.getStorageKey();
-                log.info("Reutilizando blob existente: {}", storageKey);
+                log.info("Reutilizando blob existente: {}", blob.getStorageKey());
             } else {
-                // Crear nodo primero para generar ID
-                Node fileNode = new Node();
-                fileNode.setExpediente(parent.getExpediente());
-                fileNode.setParent(parent);
-                fileNode.setType(Node.NodeType.FILE);
-                fileNode.setName(request.getFile().getOriginalFilename());
-                fileNode.setDescription(request.getDescription());
-                fileNode.setCreatedBy(uploadedBy);
-                fileNode.setCreatedAt(Instant.now());
-                fileNode.setIsDeleted(false);
-                fileNode.setSizeBytes(request.getFile().getSize());
-
-                Node savedNode = nodeRepository.save(fileNode);
-
-                // Subir a S3
-                storageKey = s3Service.uploadFileToExpediente(request.getFile(), parent.getExpediente().getId(),
+                String storageKey = s3Service.uploadFileToExpediente(request.getFile(), parent.getExpediente().getId(),
                         savedNode.getId(), uploadedById);
-
-                // Crear blob
                 blob = new FileBlob();
                 blob.setStorageKey(storageKey);
                 blob.setBucketName(bucketName);
                 blob.setSizeBytes(request.getFile().getSize());
                 blob.setChecksumSha256(checksum);
                 blob.setMimeType(request.getFile().getContentType());
-                blob.setOriginalName(request.getFile().getOriginalFilename());
+                blob.setOriginalName(fileName);
                 blob.setIsImage(isImageFile(request.getFile().getContentType()));
                 blob.setCreatedAt(Instant.now());
-
                 blob = fileBlobRepository.save(blob);
-
-                // Crear versión
-                FileVersion version = new FileVersion();
-                version.setNode(savedNode);
-                version.setBlob(blob);
-                version.setVersionNum(1);
-                version.setUploadedBy(uploadedBy);
-                version.setNote(request.getNote());
-                version.setIsCurrent(true);
-                version.setUploadedAt(Instant.now());
-
-                FileVersion savedVersion = fileVersionRepository.save(version);
-
-                // Actualizar nodo con versión actual
-                savedNode.setCurrentVersion(savedVersion);
-                nodeRepository.save(savedNode);
-
-                log.info("Archivo subido: {} (ID: {})", savedNode.getName(), savedNode.getId());
-
-                return FileUploadResponse.builder()
-                        .nodeId(savedNode.getId())
-                        .name(savedNode.getName())
-                        .sizeBytes(savedNode.getSizeBytes())
-                        .mimeType(blob.getMimeType())
-                        .versionNumber(1)
-                        .message("Archivo subido exitosamente")
-                        .build();
             }
-            return null;
+
+            Integer lastVersion = fileVersionRepository.getLastVersionNumber(savedNode.getId());
+            FileVersion version = new FileVersion();
+            version.setNode(savedNode);
+            version.setBlob(blob);
+            version.setVersionNum(lastVersion == null ? 1 : lastVersion + 1);
+            version.setUploadedBy(uploadedBy);
+            version.setNote(request.getNote());
+            version.setIsCurrent(true);
+            version.setUploadedAt(Instant.now());
+            FileVersion savedVersion = fileVersionRepository.save(version);
+            savedNode.setCurrentVersion(savedVersion);
+            nodeRepository.save(savedNode);
+            updateParentItemCount(parent);
+
+            return FileUploadResponse.builder()
+                    .nodeId(savedNode.getId())
+                    .name(savedNode.getName())
+                    .sizeBytes(savedNode.getSizeBytes())
+                    .mimeType(blob.getMimeType())
+                    .versionNumber(savedVersion.getVersionNum())
+                    .message("Archivo subido exitosamente")
+                    .build();
 
         } catch (Exception e) {
             log.error("Error subiendo archivo: {}", fileName, e);
@@ -467,6 +466,17 @@ public class NodeService {
             dto.setVersionNum(node.getCurrentVersion().getVersionNum());
             dto.setOriginalName(node.getCurrentVersion().getBlob().getOriginalName());
         }
+        // Obtener path completo
+       /*  String path = nodeRepository.getNodePath(node.getId()); */
+        String path = node.getName();
+        dto.setPath(path != null ? "" + path : "/");
+
+        return dto;
+    }
+
+    private NodeBasicDTO convertToBasicDTO(Node node) {
+        NodeBasicDTO dto = nodeMapper.toBasicDTO(node);
+
         // Obtener path completo
         /* String path = nodeRepository.getNodePath(node.getId()); */
         String path = node.getName();

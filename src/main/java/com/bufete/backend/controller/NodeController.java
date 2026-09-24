@@ -22,6 +22,7 @@ import com.bufete.backend.Dtos.FileUploadResponse;
 import com.bufete.backend.Dtos.folder.CreateFolderRequest;
 import com.bufete.backend.Dtos.folder.DownloadUrlDTO;
 import com.bufete.backend.Dtos.folder.FileUploadRequest;
+import com.bufete.backend.Dtos.folder.NodeBasicDTO;
 import com.bufete.backend.Dtos.folder.NodeDTO;
 import com.bufete.backend.Dtos.folder.PlantillaRequest;
 import com.bufete.backend.Dtos.proceso.ProcesoDTO;
@@ -68,6 +69,16 @@ public class NodeController {
         
         UUID paren = UUID.fromString(parentId);       
         List<NodeDTO> children = nodeService.getNodeChildren(paren);
+        return ResponseEntity.ok(ApiResponse.success(children, "Contenido obtenido exitosamente"));
+    }
+
+    @GetMapping("/{parentId}/childrenBasic")
+    @Operation(summary = "Obtener información básica de una carpeta")
+    public ResponseEntity<ApiResponse<List<NodeBasicDTO>>> getNodeInfoChildren(
+            @PathVariable String parentId) {
+        
+        UUID paren = UUID.fromString(parentId);       
+        List<NodeBasicDTO> children = nodeService.getNodeInfoChildren(paren);
         return ResponseEntity.ok(ApiResponse.success(children, "Contenido obtenido exitosamente"));
     }
     

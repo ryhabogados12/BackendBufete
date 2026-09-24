@@ -28,10 +28,10 @@ public class Proceso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "numero_proceso", unique = true, nullable = false, length = 100)
+    @Column(name = "numero_proceso", unique = true, length = 100)
     private String numeroProceso;
     
-    @Column(name = "nombre", nullable = false, length = 255)
+    @Column(name = "nombre", length = 255)
     private String nombre;
     
     @Column(name = "descripcion")
@@ -54,13 +54,29 @@ public class Proceso {
     
     @Column(name = "fecha_cierre")
     private LocalDate fechaCierre;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "jurisdiccion_id")
+    private Jurisdiccion jurisdiccion;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "asunto_id")
+    private Asunto asunto;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "etapa_actual_id")
+    private EtapaProceso etapaActual;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tipo_procedimiento_id")
+    private TipoProcedimiento tipoProcedimiento;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "abogado_responsable_id", nullable = false)
+    @JoinColumn(name = "abogado_responsable_id")
     private Usuario abogadoResponsable;
     
     @Column(name = "juzgado", length = 200)
@@ -112,6 +128,10 @@ public class Proceso {
     @OneToMany(mappedBy = "proceso")
     @Builder.Default
     private Set<Sentencia> sentencias = new HashSet<>();
+
+    @OneToMany(mappedBy = "proceso", cascade = CascadeType.ALL)
+    @Builder.Default
+    private Set<ProcesoEtapa> etapas = new HashSet<>();
     
     public enum EstadoProceso {
         ACTIVO, SUSPENDIDO, CERRADO, ARCHIVADO
@@ -187,6 +207,38 @@ public class Proceso {
 
     public void setFechaCierre(LocalDate fechaCierre) {
         this.fechaCierre = fechaCierre;
+    }
+
+    public Jurisdiccion getJurisdiccion() {
+        return jurisdiccion;
+    }
+
+    public void setJurisdiccion(Jurisdiccion jurisdiccion) {
+        this.jurisdiccion = jurisdiccion;
+    }
+
+    public Asunto getAsunto() {
+        return asunto;
+    }
+
+    public void setAsunto(Asunto asunto) {
+        this.asunto = asunto;
+    }
+
+    public EtapaProceso getEtapaActual() {
+        return etapaActual;
+    }
+
+    public void setEtapaActual(EtapaProceso etapaActual) {
+        this.etapaActual = etapaActual;
+    }
+
+    public TipoProcedimiento getTipoProcedimiento() {
+        return tipoProcedimiento;
+    }
+
+    public void setTipoProcedimiento(TipoProcedimiento tipoProcedimiento) {
+        this.tipoProcedimiento = tipoProcedimiento;
     }
 
     public Cliente getCliente() {
@@ -315,6 +367,14 @@ public class Proceso {
 
     public void setSentencias(Set<Sentencia> sentencias) {
         this.sentencias = sentencias;
+    }
+
+    public Set<ProcesoEtapa> getEtapas() {
+        return etapas;
+    }
+
+    public void setEtapas(Set<ProcesoEtapa> etapas) {
+        this.etapas = etapas;
     }
 
     

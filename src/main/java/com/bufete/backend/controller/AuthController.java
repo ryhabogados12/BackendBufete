@@ -40,7 +40,7 @@ public class AuthController {
 
     
     @PostMapping("/signin")
-    public ResponseEntity authenticateUser(@RequestBody LoginDTO loginDto){
+    public ResponseEntity<?> authenticateUser(@RequestBody LoginDTO loginDto){
         try {              
             Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

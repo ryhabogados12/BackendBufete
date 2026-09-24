@@ -50,6 +50,9 @@ public class Expediente {
     
     @Column(name = "root_node_id", unique = true)
     private UUID rootNodeId;
+
+    @Column(name = "plantilla_expediente_id")
+    private Integer plantillaExpedienteId;
     
     @Column(name = "orden")
     @Builder.Default
@@ -145,6 +148,14 @@ public class Expediente {
 
     public void setRootNodeId(UUID rootNodeId) {
         this.rootNodeId = rootNodeId;
+    }
+
+    public Integer getPlantillaExpedienteId() {
+        return plantillaExpedienteId;
+    }
+
+    public void setPlantillaExpedienteId(Integer plantillaExpedienteId) {
+        this.plantillaExpedienteId = plantillaExpedienteId;
     }
 
     public Integer getOrden() {

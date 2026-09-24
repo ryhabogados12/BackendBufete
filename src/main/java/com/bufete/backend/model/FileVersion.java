@@ -29,7 +29,7 @@ public class FileVersion {
     private Node node;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "blob_id", nullable = false)
+    @JoinColumn(name = "file_blob_id", nullable = false)
     private FileBlob blob;
     
     @Column(name = "version_num", nullable = false)

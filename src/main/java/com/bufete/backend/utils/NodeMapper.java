@@ -5,6 +5,7 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import com.bufete.backend.Dtos.folder.NodeBasicDTO;
 import com.bufete.backend.Dtos.folder.NodeDTO;
 import com.bufete.backend.model.Node;
 
@@ -15,6 +16,8 @@ public interface NodeMapper {
     @Mapping(target = "parentName", source = "parent.name")
     @Mapping(target = "createdByNombre", source = "createdBy.nombre")
     NodeDTO toDTO(Node node);
+    
+    NodeBasicDTO toBasicDTO(Node node);
     
     List<NodeDTO> toDTOList(List<Node> nodes);
 }

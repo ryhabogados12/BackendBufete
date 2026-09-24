@@ -21,6 +21,7 @@ import com.bufete.backend.model.Cliente;
 import com.bufete.backend.model.Proceso;
 import com.bufete.backend.model.Usuario;
 import com.bufete.backend.repository.ClienteRepository;
+import com.bufete.backend.repository.ProcesoPenalRepository;
 import com.bufete.backend.repository.ProcesoRepository;
 import com.bufete.backend.repository.UsuarioRepository;
 import com.bufete.backend.utils.ProcesoMapper;
@@ -35,17 +36,20 @@ import lombok.extern.slf4j.Slf4j;
 public class ProcesoService {
     
     private final ProcesoRepository procesoRepository;
+    private final ProcesoPenalRepository procesoPenalRepository;
     private final ClienteRepository clienteRepository;
     private final UsuarioRepository usuarioRepository;
     private final ProcesoMapper procesoMapper;
     private final ClienteService clienteService;
     
     public ProcesoService(ProcesoRepository procesoRepository,
+                         ProcesoPenalRepository procesoPenalRepository,
                          ClienteRepository clienteRepository,
                          UsuarioRepository usuarioRepository,
                          ProcesoMapper procesoMapper,
                          ClienteService clienteService) {
         this.procesoRepository = procesoRepository;
+        this.procesoPenalRepository = procesoPenalRepository;
         this.clienteRepository = clienteRepository;
         this.usuarioRepository = usuarioRepository;
         this.procesoMapper = procesoMapper;
@@ -108,7 +112,6 @@ public class ProcesoService {
                 .orElseThrow(() -> new EntityNotFoundException("Proceso no encontrado con ID: " + id));
         
         ProcesoDTO dto = procesoMapper.toDTO(proceso);
-        dto.setClienteId(proceso.getCliente().getIdentificacion());
         dto.setTotalExpedientes(procesoRepository.countExpedientesByProcesoId(id));
         dto.setTotalEventos(procesoRepository.countEventosByProcesoId(id));
         

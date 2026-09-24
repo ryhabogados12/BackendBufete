@@ -1,5 +1,6 @@
 package com.bufete.backend.utils;
 
+import com.bufete.backend.Dtos.folder.NodeBasicDTO;
 import com.bufete.backend.Dtos.folder.NodeDTO;
 import com.bufete.backend.model.Expediente;
 import com.bufete.backend.model.Node;
@@ -12,8 +13,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-08-07T12:39:13-0500",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.46.100.v20260624-0231, environment: Java 21.0.11 (Eclipse Adoptium)"
+    date = "2026-09-23T17:05:50-0500",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Oracle Corporation)"
 )
 @Component
 public class NodeMapperImpl implements NodeMapper {
@@ -29,19 +30,37 @@ public class NodeMapperImpl implements NodeMapper {
         nodeDTO.expedienteNombre( nodeExpedienteNombre( node ) );
         nodeDTO.parentName( nodeParentName( node ) );
         nodeDTO.createdByNombre( nodeCreatedByNombre( node ) );
-        nodeDTO.children( nodeSetToNodeDTOList( node.getChildren() ) );
-        nodeDTO.createdAt( node.getCreatedAt() );
-        nodeDTO.description( node.getDescription() );
         nodeDTO.id( node.getId() );
+        nodeDTO.type( node.getType() );
+        nodeDTO.name( node.getName() );
+        nodeDTO.description( node.getDescription() );
+        nodeDTO.modulo( node.getModulo() );
+        nodeDTO.createdAt( node.getCreatedAt() );
+        nodeDTO.updatedAt( node.getUpdatedAt() );
+        nodeDTO.sizeBytes( node.getSizeBytes() );
         nodeDTO.itemCount( node.getItemCount() );
         nodeDTO.lastAccessed( node.getLastAccessed() );
-        nodeDTO.modulo( node.getModulo() );
-        nodeDTO.name( node.getName() );
-        nodeDTO.sizeBytes( node.getSizeBytes() );
-        nodeDTO.type( node.getType() );
-        nodeDTO.updatedAt( node.getUpdatedAt() );
+        nodeDTO.children( nodeSetToNodeDTOList( node.getChildren() ) );
 
         return nodeDTO.build();
+    }
+
+    @Override
+    public NodeBasicDTO toBasicDTO(Node node) {
+        if ( node == null ) {
+            return null;
+        }
+
+        NodeBasicDTO.NodeBasicDTOBuilder nodeBasicDTO = NodeBasicDTO.builder();
+
+        nodeBasicDTO.id( node.getId() );
+        nodeBasicDTO.type( node.getType() );
+        nodeBasicDTO.name( node.getName() );
+        nodeBasicDTO.description( node.getDescription() );
+        nodeBasicDTO.itemCount( node.getItemCount() );
+        nodeBasicDTO.children( nodeSetToNodeDTOList( node.getChildren() ) );
+
+        return nodeBasicDTO.build();
     }
 
     @Override

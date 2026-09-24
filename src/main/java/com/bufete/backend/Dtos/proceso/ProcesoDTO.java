@@ -28,6 +28,10 @@ public class ProcesoDTO {
     private Instant fechaCreacion;
     private LocalDate fechaInicio;
     private LocalDate fechaCierre;
+    private Integer jurisdiccionId;
+    private Integer asuntoId;
+    private Integer etapaActualId;
+    private Integer tipoProcedimientoId;
     @NotNull(message = "El cliente es obligatorio")
     private String clienteId;
     private String clienteNombre;

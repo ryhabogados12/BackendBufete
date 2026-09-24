@@ -6,9 +6,9 @@ spring:
     name: backend-bufete
 
   datasource:
-    url: jdbc:postgresql://ep-royal-pond-adc22g83-pooler.c-2.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=npg_nX09SPHKbImB&sslmode=require&channelBinding=require
+    url: jdbc:postgresql://ep-cold-hat-audh2v3b-pooler.c-10.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=npg_ihcG8sX4jmCp&sslmode=require&channelBinding=require
     username: neondb_owner
-    password: npg_nX09SPHKbIm
+    password: npg_ihcG8sX4jmCp
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 2
@@ -38,11 +38,11 @@ spring:
       enabled: true
 
 aws:
-  access-key: AKIA33UF7G65HPZ64XE3
-  secret-key: 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
-  region: us-east-2
+  access-key: AKIA5BZK3ALKXVQFVLMZ
+  secret-key: 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
+  region: us-east-1
   s3:
-    bucket-name: bucketbufete2
+    bucket-name: bufetebucket
     base-path: documentos
 
 logging:

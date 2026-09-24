@@ -74,9 +74,12 @@ public class Node {
     @Builder.Default
     private Boolean isDeleted = false;
     
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "current_version_id")
     private FileVersion currentVersion;
+
+    @Column(name = "plantilla_item_id")
+    private Long plantillaItemId;
     
     @Column(name = "size_bytes")
     @Builder.Default
@@ -211,6 +214,14 @@ public class Node {
 
     public void setCurrentVersion(FileVersion currentVersion) {
         this.currentVersion = currentVersion;
+    }
+
+    public Long getPlantillaItemId() {
+        return plantillaItemId;
+    }
+
+    public void setPlantillaItemId(Long plantillaItemId) {
+        this.plantillaItemId = plantillaItemId;
     }
 
     public Long getSizeBytes() {

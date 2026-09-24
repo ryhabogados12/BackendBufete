@@ -20,6 +20,8 @@ public interface NodeRepository extends JpaRepository<Node, UUID>, JpaSpecificat
     
     @Query("SELECT n FROM Node n WHERE n.expediente.id = :expedienteId AND n.parent IS NULL AND n.isDeleted = false")
     Optional<Node> findRootNodeByExpedienteId(@Param("expedienteId") Long expedienteId);
+
+    List<Node> findByExpedienteIdAndIsDeletedFalseOrderByParentIdAscNameAsc(Long expedienteId);
     
     @Query("SELECT n FROM Node n WHERE n.contable.id = :contableId AND n.parent IS NULL AND n.isDeleted = false")
     Optional<Node> findRootNodeByContableId(@Param("contableId") Long contableId);
@@ -35,7 +37,7 @@ public interface NodeRepository extends JpaRepository<Node, UUID>, JpaSpecificat
     
     @Query("SELECT n FROM Node n WHERE n.name = :name AND n.parent.id = :parentId AND n.isDeleted = false")
     Optional<Node> findByNameAndParentId(@Param("name") String name, @Param("parentId") UUID parentId);
-    
+
     Node findByName(String name);
 
     // Consulta para obtener los nombres de los ancestros ordenados por profundidad descendente

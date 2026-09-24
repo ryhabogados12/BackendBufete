@@ -22,6 +22,10 @@ public interface ProcesoMapper {
     @Mapping(target = "abogadoResponsableNombre", 
              expression = "java(proceso.getAbogadoResponsable().getNombre() + \" \" + proceso.getAbogadoResponsable().getApellido())")
     @Mapping(target = "createdByNombre", source = "createdBy.nombre")
+    @Mapping(target = "jurisdiccionId", source = "jurisdiccion.id")
+    @Mapping(target = "asuntoId", source = "asunto.id")
+    @Mapping(target = "etapaActualId", source = "etapaActual.id")
+    @Mapping(target = "tipoProcedimientoId", source = "tipoProcedimiento.id")
     ProcesoDTO toDTO(Proceso proceso);
     
     @Mapping(target = "clienteId", source = "cliente.identificacion")

@@ -15,7 +15,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -24,8 +23,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "file_blob", indexes = {
     @Index(name = "idx_blob_storage_key", columnList = "storage_key"),
     @Index(name = "idx_blob_mime_type", columnList = "mime_type")
-}, uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"checksum_sha256", "size_bytes"})
 })
 @NoArgsConstructor
 @AllArgsConstructor

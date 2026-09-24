@@ -3,8 +3,12 @@ package com.bufete.backend.utils;
 import com.bufete.backend.Dtos.proceso.CreateProcesoRequest;
 import com.bufete.backend.Dtos.proceso.EditProcesoRequest;
 import com.bufete.backend.Dtos.proceso.ProcesoDTO;
+import com.bufete.backend.model.Asunto;
 import com.bufete.backend.model.Cliente;
+import com.bufete.backend.model.EtapaProceso;
+import com.bufete.backend.model.Jurisdiccion;
 import com.bufete.backend.model.Proceso;
+import com.bufete.backend.model.TipoProcedimiento;
 import com.bufete.backend.model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +17,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-08-07T12:39:14-0500",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.46.100.v20260624-0231, environment: Java 21.0.11 (Eclipse Adoptium)"
+    date = "2026-09-23T17:05:50-0500",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Oracle Corporation)"
 )
 @Component
 public class ProcesoMapperImpl implements ProcesoMapper {
@@ -31,23 +35,27 @@ public class ProcesoMapperImpl implements ProcesoMapper {
         procesoDTO.clienteNombre( procesoClienteNombre( proceso ) );
         procesoDTO.abogadoResponsableId( procesoAbogadoResponsableId( proceso ) );
         procesoDTO.createdByNombre( procesoCreatedByNombre( proceso ) );
-        procesoDTO.activo( proceso.getActivo() );
-        procesoDTO.createdAt( proceso.getCreatedAt() );
-        procesoDTO.cuantia( proceso.getCuantia() );
-        procesoDTO.demandado( proceso.getDemandado() );
-        procesoDTO.demandante( proceso.getDemandante() );
+        procesoDTO.jurisdiccionId( procesoJurisdiccionId( proceso ) );
+        procesoDTO.asuntoId( procesoAsuntoId( proceso ) );
+        procesoDTO.etapaActualId( procesoEtapaActualId( proceso ) );
+        procesoDTO.tipoProcedimientoId( procesoTipoProcedimientoId( proceso ) );
+        procesoDTO.id( proceso.getId() );
+        procesoDTO.numeroProceso( proceso.getNumeroProceso() );
+        procesoDTO.nombre( proceso.getNombre() );
         procesoDTO.descripcion( proceso.getDescripcion() );
+        procesoDTO.tipoProceso( proceso.getTipoProceso() );
         procesoDTO.estado( proceso.getEstado() );
-        procesoDTO.fechaCierre( proceso.getFechaCierre() );
         procesoDTO.fechaCreacion( proceso.getFechaCreacion() );
         procesoDTO.fechaInicio( proceso.getFechaInicio() );
-        procesoDTO.id( proceso.getId() );
+        procesoDTO.fechaCierre( proceso.getFechaCierre() );
         procesoDTO.juzgado( proceso.getJuzgado() );
-        procesoDTO.nombre( proceso.getNombre() );
-        procesoDTO.numeroProceso( proceso.getNumeroProceso() );
-        procesoDTO.observaciones( proceso.getObservaciones() );
         procesoDTO.radicado( proceso.getRadicado() );
-        procesoDTO.tipoProceso( proceso.getTipoProceso() );
+        procesoDTO.demandante( proceso.getDemandante() );
+        procesoDTO.demandado( proceso.getDemandado() );
+        procesoDTO.cuantia( proceso.getCuantia() );
+        procesoDTO.observaciones( proceso.getObservaciones() );
+        procesoDTO.activo( proceso.getActivo() );
+        procesoDTO.createdAt( proceso.getCreatedAt() );
         procesoDTO.updatedAt( proceso.getUpdatedAt() );
 
         procesoDTO.abogadoResponsableNombre( proceso.getAbogadoResponsable().getNombre() + " " + proceso.getAbogadoResponsable().getApellido() );
@@ -77,17 +85,17 @@ public class ProcesoMapperImpl implements ProcesoMapper {
 
         Proceso.ProcesoBuilder proceso = Proceso.builder();
 
-        proceso.cuantia( request.getCuantia() );
-        proceso.demandado( request.getDemandado() );
-        proceso.demandante( request.getDemandante() );
+        proceso.numeroProceso( request.getNumeroProceso() );
+        proceso.nombre( request.getNombre() );
         proceso.descripcion( request.getDescripcion() );
+        proceso.tipoProceso( request.getTipoProceso() );
         proceso.fechaInicio( request.getFechaInicio() );
         proceso.juzgado( request.getJuzgado() );
-        proceso.nombre( request.getNombre() );
-        proceso.numeroProceso( request.getNumeroProceso() );
-        proceso.observaciones( request.getObservaciones() );
         proceso.radicado( request.getRadicado() );
-        proceso.tipoProceso( request.getTipoProceso() );
+        proceso.demandante( request.getDemandante() );
+        proceso.demandado( request.getDemandado() );
+        proceso.cuantia( request.getCuantia() );
+        proceso.observaciones( request.getObservaciones() );
 
         return proceso.build();
     }
@@ -170,5 +178,65 @@ public class ProcesoMapperImpl implements ProcesoMapper {
             return null;
         }
         return nombre;
+    }
+
+    private Integer procesoJurisdiccionId(Proceso proceso) {
+        if ( proceso == null ) {
+            return null;
+        }
+        Jurisdiccion jurisdiccion = proceso.getJurisdiccion();
+        if ( jurisdiccion == null ) {
+            return null;
+        }
+        Integer id = jurisdiccion.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
+    }
+
+    private Integer procesoAsuntoId(Proceso proceso) {
+        if ( proceso == null ) {
+            return null;
+        }
+        Asunto asunto = proceso.getAsunto();
+        if ( asunto == null ) {
+            return null;
+        }
+        Integer id = asunto.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
+    }
+
+    private Integer procesoEtapaActualId(Proceso proceso) {
+        if ( proceso == null ) {
+            return null;
+        }
+        EtapaProceso etapaActual = proceso.getEtapaActual();
+        if ( etapaActual == null ) {
+            return null;
+        }
+        Integer id = etapaActual.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
+    }
+
+    private Integer procesoTipoProcedimientoId(Proceso proceso) {
+        if ( proceso == null ) {
+            return null;
+        }
+        TipoProcedimiento tipoProcedimiento = proceso.getTipoProcedimiento();
+        if ( tipoProcedimiento == null ) {
+            return null;
+        }
+        Integer id = tipoProcedimiento.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
     }
 }

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-08-07T12:39:14-0500",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.46.100.v20260624-0231, environment: Java 21.0.11 (Eclipse Adoptium)"
+    date = "2026-09-23T17:05:50-0500",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Oracle Corporation)"
 )
 @Component
 public class ClienteMapperImpl implements ClienteMapper {
@@ -26,24 +26,24 @@ public class ClienteMapperImpl implements ClienteMapper {
         ClienteDTO.ClienteDTOBuilder clienteDTO = ClienteDTO.builder();
 
         clienteDTO.createdByNombre( clienteCreatedByNombre( cliente ) );
-        clienteDTO.activo( cliente.getActivo() );
-        clienteDTO.apellido( cliente.getApellido() );
-        clienteDTO.ciudad( cliente.getCiudad() );
-        clienteDTO.createdAt( cliente.getCreatedAt() );
-        clienteDTO.departamento( cliente.getDepartamento() );
-        clienteDTO.direccion( cliente.getDireccion() );
-        clienteDTO.email( cliente.getEmail() );
-        clienteDTO.fechaNacimiento( cliente.getFechaNacimiento() );
         clienteDTO.id( cliente.getId() );
-        clienteDTO.identificacion( cliente.getIdentificacion() );
-        clienteDTO.nombre( cliente.getNombre() );
-        clienteDTO.observaciones( cliente.getObservaciones() );
-        clienteDTO.pais( cliente.getPais() );
-        clienteDTO.razonSocial( cliente.getRazonSocial() );
-        clienteDTO.representanteLegal( cliente.getRepresentanteLegal() );
-        clienteDTO.telefono( cliente.getTelefono() );
         clienteDTO.tipoCliente( tipoClienteToTipoCliente( cliente.getTipoCliente() ) );
+        clienteDTO.nombre( cliente.getNombre() );
+        clienteDTO.apellido( cliente.getApellido() );
+        clienteDTO.razonSocial( cliente.getRazonSocial() );
+        clienteDTO.identificacion( cliente.getIdentificacion() );
         clienteDTO.tipoDocumento( cliente.getTipoDocumento() );
+        clienteDTO.email( cliente.getEmail() );
+        clienteDTO.telefono( cliente.getTelefono() );
+        clienteDTO.direccion( cliente.getDireccion() );
+        clienteDTO.ciudad( cliente.getCiudad() );
+        clienteDTO.departamento( cliente.getDepartamento() );
+        clienteDTO.pais( cliente.getPais() );
+        clienteDTO.fechaNacimiento( cliente.getFechaNacimiento() );
+        clienteDTO.representanteLegal( cliente.getRepresentanteLegal() );
+        clienteDTO.activo( cliente.getActivo() );
+        clienteDTO.observaciones( cliente.getObservaciones() );
+        clienteDTO.createdAt( cliente.getCreatedAt() );
         clienteDTO.updatedAt( cliente.getUpdatedAt() );
 
         return clienteDTO.build();
@@ -71,21 +71,21 @@ public class ClienteMapperImpl implements ClienteMapper {
 
         Cliente.ClienteBuilder cliente = Cliente.builder();
 
+        cliente.tipoCliente( tipoClienteToTipoCliente1( request.getTipoCliente() ) );
+        cliente.nombre( request.getNombre() );
         cliente.apellido( request.getApellido() );
+        cliente.razonSocial( request.getRazonSocial() );
+        cliente.identificacion( request.getIdentificacion() );
+        cliente.tipoDocumento( request.getTipoDocumento() );
+        cliente.email( request.getEmail() );
+        cliente.telefono( request.getTelefono() );
+        cliente.direccion( request.getDireccion() );
         cliente.ciudad( request.getCiudad() );
         cliente.departamento( request.getDepartamento() );
-        cliente.direccion( request.getDireccion() );
-        cliente.email( request.getEmail() );
-        cliente.fechaNacimiento( request.getFechaNacimiento() );
-        cliente.identificacion( request.getIdentificacion() );
-        cliente.nombre( request.getNombre() );
-        cliente.observaciones( request.getObservaciones() );
         cliente.pais( request.getPais() );
-        cliente.razonSocial( request.getRazonSocial() );
+        cliente.fechaNacimiento( request.getFechaNacimiento() );
         cliente.representanteLegal( request.getRepresentanteLegal() );
-        cliente.telefono( request.getTelefono() );
-        cliente.tipoCliente( tipoClienteToTipoCliente1( request.getTipoCliente() ) );
-        cliente.tipoDocumento( request.getTipoDocumento() );
+        cliente.observaciones( request.getObservaciones() );
 
         return cliente.build();
     }
