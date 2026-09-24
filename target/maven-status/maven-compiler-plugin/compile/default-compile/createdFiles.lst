@@ -30,7 +30,6 @@ com\bufete\backend\Dtos\juridico\AsuntoPenalDetalleDTO$ExpedienteDetalle.class
 com\bufete\backend\model\Permiso$PermisoBuilder.class
 com\bufete\backend\repository\ProcesoActuacionRepository.class
 com\bufete\backend\Dtos\cliente\CreateClienteRequest.class
-com\bufete\backend\Dtos\juridico\AsuntoPenalDetalleDTO$NodoDetalle.class
 com\bufete\backend\utils\MigrationReport$MigrationError.class
 com\bufete\backend\service\ProcesoPenalService.class
 com\bufete\backend\Dtos\juridico\CatalogoDTO.class
@@ -223,7 +222,6 @@ com\bufete\backend\Dtos\rol\RolDTO.class
 com\bufete\backend\Dtos\proceso\CreateProcesoRequest.class
 com\bufete\backend\model\ProcesoPenal.class
 com\bufete\backend\Dtos\folder\DownloadUrlDTO$DownloadUrlDTOBuilder.class
-com\bufete\backend\Dtos\juridico\AsuntoPenalDetalleDTO$NodoDetalle$NodoDetalleBuilder.class
 com\bufete\backend\model\AuditLog.class
 com\bufete\backend\Dtos\juridico\AsuntoPenalDetalleDTO$ParticipanteDetalle$ParticipanteDetalleBuilder.class
 com\bufete\backend\Dtos\folder\PlantillaRequest$PlantillaRequestBuilder.class
